@@ -1,0 +1,17 @@
+---
+- name: "Installing and Managing httpd"
+  hosts: amazon
+  become: yes
+  vars_files:
+    - variables.yml
+  tasks:
+    - name: "Installing Apache"
+      yum:
+        name: httpd
+        state: present
+    - name: "Restarting httpd and enabling the service"
+      when: conf_copy_status.changed == true or vhost_status.changed == true
+      service:
+        name: httpd
+        state: restarted
+        enabled: true

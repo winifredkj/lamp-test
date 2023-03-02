@@ -1,0 +1,5 @@
+---
+apache_port: "7070"
+apache_owner: "apache"
+apache_group: "apache"
+apache_domain: "blog.devopsive.com"
