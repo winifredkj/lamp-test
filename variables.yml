@@ -1,5 +1,5 @@
 ---
-apache_port: "8080"
+apache_port: "80"
 apache_owner: "apache"
 apache_group: "apache"
 apache_domain: "blog.devopsive.com"

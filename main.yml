@@ -14,6 +14,23 @@
         src: httpd.conf.j2
         dest: /etc/httpd/conf/httpd.conf
       register: conf_copy_status
+    - name: "Creating virtual host entry from virtualhost.conf.j2"
+      template:
+        src: virtualhost.conf.j2
+        dest: "/etc/httpd/conf.d/{{apache_domain}}.conf"
+        owner: "{{apache_owner}}"
+        group: "{{apache_group}}"
+      register: vhost_status
+    - name: "Creating document root for {{apache_domain}}"
+      file:
+        path: "/var/www/html/{{apache_domain}}"
+        state: directory
+        owner: "{{apache_owner}}"
+        group: "{{apache_group}}"
+    - name: "Creating sample index page /var/www/html/{{apache_domain}}/index.html"
+      copy:
+        content: "<h1> Hostname: {{ansible_fqdn}} </h1>"
+        dest: "/var/www/html/{{apache_domain}}/index.html"
     - name: "Restarting httpd and enabling the service"
       when: conf_copy_status.changed == true or vhost_status.changed == true
       service:
