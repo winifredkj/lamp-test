@@ -31,6 +31,8 @@
       copy:
         content: "<h1> Hostname: {{ansible_fqdn}} </h1>"
         dest: "/var/www/html/{{apache_domain}}/index.html"
+        owner: "{{apache_owner}}"
+        group: "{{apache_group}}"
     - name: "Restarting httpd and enabling the service"
       when: conf_copy_status.changed == true or vhost_status.changed == true
       service:
