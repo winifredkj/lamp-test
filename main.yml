@@ -9,6 +9,11 @@
       yum:
         name: httpd
         state: present
+    - name: "copying httpd.conf.j2 to client as httpd.conf"
+      template:
+        src: httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+      register: conf_copy_status
     - name: "Restarting httpd and enabling the service"
       when: conf_copy_status.changed == true or vhost_status.changed == true
       service:
