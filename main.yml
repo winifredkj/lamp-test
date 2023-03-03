@@ -50,3 +50,21 @@
         name: httpd
         state: restarted
         enabled: true
+
+    - name: "Configure yum repo for mysql"
+      shell: |
+        rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+        rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+    - name: "Mysql - Installing MySQL and MySQL-python"
+      yum:
+        name:
+          - mysql-community-server
+          - MySQL-python
+        state: present
+
+    - name: "MySQL - Restarting and Enabling service"
+      service:
+        name: mysqld
+        state: restarted
+        enabled: true
