@@ -9,6 +9,8 @@
       yum:
         name: httpd
         state: present
+    - name: "Apache - install PHP support"
+      shell: amazon-linux-extras install php7.4 -y
     - name: "copying httpd.conf.j2 to client as httpd.conf"
       template:
         src: httpd.conf.j2
