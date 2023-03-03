@@ -23,6 +23,15 @@
         owner: "{{apache_owner}}"
         group: "{{apache_group}}"
       register: vhost_status
+    - name: "Apache - Creating sample test.html and info.php page"
+      copy:
+        src: "{{item}}"
+        dest: "/var/www/html/{{apache_domain}}/"
+        owner: "{{apache_owner}}"
+        group: "{{apache_group}}"
+      with_items:
+        - test.html
+        - info.php
     - name: "Creating document root for {{apache_domain}}"
       file:
         path: "/var/www/html/{{apache_domain}}"
